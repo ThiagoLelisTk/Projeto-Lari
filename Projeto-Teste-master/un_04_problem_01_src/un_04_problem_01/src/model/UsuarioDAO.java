@@ -18,4 +18,6 @@ public interface UsuarioDAO {
     public Usuario atualizarUsuario(Usuario uAnt, 
                                     Usuario uAtual);
     public List<Usuario> listarTodosUsuarios();    
+    
+    
 }

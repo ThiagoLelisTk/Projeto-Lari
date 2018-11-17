@@ -82,7 +82,7 @@ public class TelaListagem extends JFrame{
                 Contato c = new Contato(contato[0], contato[1], contato[2], contato[3], "aprovado");
                 
                 setVisible(false);
-                TelaCadastro tc = new TelaCadastro(c);
+                TelaCadastro tc = new TelaCadastro(c, nomeUsuario);
                 tc.setVisible(true);
             }
         });

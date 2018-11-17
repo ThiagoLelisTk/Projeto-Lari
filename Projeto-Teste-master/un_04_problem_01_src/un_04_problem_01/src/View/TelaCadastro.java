@@ -30,7 +30,8 @@ public class TelaCadastro extends JFrame{
         
     }
     
-    public TelaCadastro(Contato c){
+    public TelaCadastro(Contato c, String nomeUsuario){
+        this.nomeUsuario = nomeUsuario;
         this.contao = c;
         initComponents2();
     }
@@ -77,9 +78,7 @@ public class TelaCadastro extends JFrame{
                 public void actionPerformed(ActionEvent e) {
                     Contato c2 = new Contato();
                     
-                    System.out.println("Vou chamar o Inserir!");
                     c2 = sci.inserir(jTxtNome.getText(), jTxtTelefone.getText(), jTxtEmail.getText(), jTxtEndereço.getText());
-                    System.out.println("Passei do Inserir!");
                     
                     if(c2.getAprovado().equals("aprovado")){
                         JOptionPane.showMessageDialog(null, "Arquivo Atualizado com Sucesso!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -174,8 +173,9 @@ public class TelaCadastro extends JFrame{
     			tp.aparecerTela();
     		}
     	});
-
-        jTxtNome = new JTextField();
+        
+        System.out.println("BAT");
+        jTxtNome = new JTextField(contao.getNome());
         jlNome = new JLabel("Nome");
         jlTelefone = new JLabel("Telefone");
         jlEmail = new JLabel("Email");
@@ -184,43 +184,57 @@ public class TelaCadastro extends JFrame{
         jTxtTelefone = new javax.swing.JTextField(contao.getTelefone());
         jTxtEmail = new javax.swing.JTextField(contao.getEmail());
         jbCadastrar = new JButton("Cadastrar");
+        System.out.println("BAT2");
         
         jbCadastrar.addActionListener(new ActionListener() {
             ServicoContatoImpl sci = new ServicoContatoImpl(nomeUsuario);
+            
+            
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Nome digitado:"+jTxtNome.getName());
+                    System.out.println("Nome digitado:"+nomeUsuario);
                     
                     Contato c = new Contato();
+                    c.setNome(jTxtNome.getText());
+                    c.setTelefone(jTxtTelefone.getText());
+                    c.setEmail(jTxtEmail.getText());
+                    c.setEndereco(jTxtEndereço.getText());
                     c = sci.atualizarContato(contao, c);
-                    
-                    System.out.println(c.getNome());
+                    System.out.println("");
                     
                     if(c.getAprovado().equals("aprovado")){
+                        System.out.println("Fui aprovado!");
                         System.out.println(contao.getNome());
                         JOptionPane.showMessageDialog(null, "Arquivo Atualizado com Sucesso!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                         setVisible(false);
                         TelaPrincipal tp = new TelaPrincipal(nomeUsuario);
                         tp.setVisible(true);
                     }else if(c.getAprovado().equals("endereco invalido")){
+                        System.out.println("Endereco deu ruim!");
                         JOptionPane.showMessageDialog(null, "Endereço Invalido", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                         jTxtEndereço.setText("");  
                     }else if(c.getAprovado().equals("email invalido")){
+                        System.out.println("Email deu ruim!");
                         JOptionPane.showMessageDialog(null, "Email Invalido", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                         jTxtEmail.setText("");  
                     }else if(c.getAprovado().equals("somente numero")){
+                        System.out.println("Numero deu ruim!");
                         JOptionPane.showMessageDialog(null, "Somente Numeros no Telefone", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                         jTxtTelefone.setText("");  
                     }else if(c.getAprovado().equals("tamanho invalido")){
+                        System.out.println("Tamanho deu ruim!");
                         JOptionPane.showMessageDialog(null, "Tamanho do Telefone Invalido", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                         jTxtTelefone.setText("");  
                     }else if(c.getAprovado().equals("invalido")){
+                        System.out.println("Invalido deu ruim?! Que?");
                         JOptionPane.showMessageDialog(null, "Nome com Caractere Invalidos (!@#$%&*(){}/?<>+.,:;)", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                         jTxtNome.setText("");  
                     }else if(c.getAprovado().equals("nome existente")){
+                        System.out.println("Nome deu ruim!");
                         JOptionPane.showMessageDialog(null, "Nome Já Existente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                         jTxtNome.setText("");  
                     }else if(c.getAprovado().equals("nome vazio")){
+                        System.out.println("Nome vazio deu ruim!");
                         JOptionPane.showMessageDialog(null, "Campo Nome Vazio", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                         jTxtNome.setText("");  
                     }

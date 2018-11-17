@@ -4,6 +4,10 @@ package View;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -19,30 +23,33 @@ import model.UsuarioDAOImpl;
 
 public class TelaLogin extends JFrame{
     
+    File file = new File("C:\\Users\\Tk\\Desktop\\Projeto-Teste-master\\un_04_problem_01_src\\un_04_problem_01\\data_uwkldjr.txt");
     private javax.swing.JLabel jlNome;
     private javax.swing.JLabel jlsenha;
     private javax.swing.JPasswordField jTxtSenha;
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JToggleButton jtbOk;
-    private JButton jbNovo;
+    private JButton jbNovo, jbExclui;
+    
     
     UsuarioDAOImpl udi = new UsuarioDAOImpl();
     ServicoUsuarioImpl sui = new ServicoUsuarioImpl("user.txt");
     
      public TelaLogin() {
-        initComponents();
+         initComponents();
     }
     
   @SuppressWarnings("unchecked")
     
     private void initComponents() {
-
+        
         jTxtNome = new javax.swing.JTextField("thiago");
         jTxtSenha = new javax.swing.JPasswordField("12345");
         jlNome = new JLabel("Nome de Usuário");
         jlsenha = new JLabel("Senha");
         jtbOk = new JToggleButton("OK");
         jbNovo = new JButton("Novo Usuário");
+        jbExclui = new JButton("Excluir Usuario");
         
         jtbOk.addActionListener(new ActionListener() {
             @Override
@@ -73,6 +80,15 @@ public class TelaLogin extends JFrame{
                 tcu.setVisible(true);
             }
         });
+        
+        jbExclui.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                file.delete();
+                System.out.println("Deletei arquivo;");
+            }
+        });
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jlNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -84,6 +100,10 @@ public class TelaLogin extends JFrame{
         jbNovo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18Ne
         
         jbNovo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        
+        jbExclui.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18Ne
+        
+        jbExclui.setFont(new Font("Tahoma", Font.PLAIN, 14));
         
         
 
@@ -98,6 +118,7 @@ public class TelaLogin extends JFrame{
         			.addGap(18)
         			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
         				.addComponent(jbNovo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jbExclui, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         				.addGroup(Alignment.LEADING, layout.createParallelGroup(Alignment.TRAILING, false)
         					.addComponent(jTxtSenha, Alignment.LEADING)
         					.addComponent(jTxtNome, Alignment.LEADING)
@@ -119,6 +140,8 @@ public class TelaLogin extends JFrame{
         			.addComponent(jtbOk)
         			.addGap(18)
         			.addComponent(jbNovo)
+                                .addGap(18)
+                                .addComponent(jbExclui)
         			.addContainerGap(81, Short.MAX_VALUE))
         );
         getContentPane().setLayout(layout);

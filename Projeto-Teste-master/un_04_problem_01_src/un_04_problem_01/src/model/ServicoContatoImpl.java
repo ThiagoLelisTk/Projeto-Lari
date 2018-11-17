@@ -9,7 +9,9 @@ import java.util.List;
  */
 public class ServicoContatoImpl implements ServicoContato{
     ContatoDAOImpl cdi;
+    UsuarioDAOImpl udi = new UsuarioDAOImpl();
     List<Contato> contatosLista;
+    List<Usuario> usuarioLista;
     int atualizar = 0;
     
     public ServicoContatoImpl(String nome_arq_dados_c){
@@ -39,7 +41,6 @@ public class ServicoContatoImpl implements ServicoContato{
 
     @Override
     public Contato inserir(String nome, String tel, String email, String end) {
-        System.out.println("Entrei na Verificação");
         Contato c = null;
         
         String verificarNome = verificarNome(nome, atualizar);
@@ -51,33 +52,25 @@ public class ServicoContatoImpl implements ServicoContato{
             if (verificarTel.equals(tel)){
                 if(verificarEmail.equals(email)){
                     if(verificarEnd.equals(end)){
-                        System.out.println("Aprovado");
                         c = new Contato(nome, tel, email, end, "aprovado");
                         
                     }else{
                         c = new Contato(nome, tel, email, end, "endereco invalido");
-                        System.out.println("Endereco errado");
                     }
                 } else{
                     c = new Contato(nome, tel, email, end, "email invalido");
-                    System.out.println("Email errado");
                 }
             }else if (verificarTel.equals("somente numero")){
-                System.out.println("Telefone errado");
                 c = new Contato(nome, tel, email, end, "somente numero");
             }else if (verificarTel.equals("tamanho invalido")){
                 c = new Contato(nome, tel, email, end, "tamanho invalido");
-                System.out.println("Tamanho invalido");
             }
             
         }else if (verificarNome.equals("caractere inadequado")){
-            System.out.println("Caracter errado");
             c = new Contato(nome, tel, email, end, "invalido");
         }else if (verificarNome.equals("nome existente")){
-            System.out.println("Nome existe");
             c = new Contato(nome, tel, email, end, "nome existente");
         }else if (verificarNome.equals("nome vazio")){
-            System.out.println("Nome vazio");
             c = new Contato(nome, tel, email, end, "vazio");
         }
         return inserir(c);
@@ -94,9 +87,8 @@ public class ServicoContatoImpl implements ServicoContato{
     }
 
     @Override
-    public Contato atualizarContato(Contato cAnt, Contato cAtual) {
+    public Contato atualizarContato(Contato cAnt, Contato cAtual) {;
         atualizar = 1;
-        
         cAtual = inserir(cAtual.getNome(), cAtual.getTelefone(), cAtual.getEmail(), cAtual.getEndereco());
         
         return cdi.atualizarContato(cAnt, cAtual);
@@ -109,7 +101,6 @@ public class ServicoContatoImpl implements ServicoContato{
     }
     
     public String verificarNome(String nome, int passeiaqui){
-        System.out.println("Este é o nome: "+nome);
         int brack = 0;
         String listaCaractere = "!@#$%&*(){}/?<>+.,:;";
         char[] caracteres = listaCaractere.toCharArray();
@@ -143,7 +134,6 @@ public class ServicoContatoImpl implements ServicoContato{
         } else{
             nome = "nome vazio";
         }
-        System.out.println("Passei VerificaNome"+nome);
         return nome;
     }
     
@@ -164,7 +154,6 @@ public class ServicoContatoImpl implements ServicoContato{
         }else{
             tel = "tamanho invalido";
         }
-        System.out.println("Passei VerificaTelefone");
         return tel;
     }
     
@@ -207,7 +196,7 @@ public class ServicoContatoImpl implements ServicoContato{
         }else{
             email = "email invalido";
         }
-        */System.out.println("Passei VerificaEmail");
+        */
         return email;
     }
     
@@ -228,7 +217,6 @@ public class ServicoContatoImpl implements ServicoContato{
         }else{
             end = "endereco invalido";
         }
-        System.out.println("Passei VerificaEndereco");
         return end;
     }
 	
